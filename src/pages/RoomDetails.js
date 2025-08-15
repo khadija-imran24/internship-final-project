@@ -22,7 +22,7 @@ const RoomDetails = () => {
       <section className="room-hero">
         <div className="container">
           <h1>{room.name}</h1>
-          <p>{room.type} • ${room.price}/night</p>
+          <p>{room.type} • PKR. {room.price}/night</p>
         </div>
       </section>
 
@@ -51,7 +51,7 @@ const RoomDetails = () => {
             <div className="room-info">
               <h2>{room.name}</h2>
               <p className="room-type">{room.type}</p>
-              <p className="price">${room.price}/night</p>
+              <p className="price">PKR. {room.price}/night</p>
               
               <div className="room-specs">
                 <div className="spec">

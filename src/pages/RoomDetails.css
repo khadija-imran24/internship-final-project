@@ -83,7 +83,7 @@
 .room-info h2 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: #853540;
 }
 
 .room-type {
@@ -96,7 +96,7 @@
 
 .room-price {
   font-size: 2rem;
-  color: #3498db;
+  color: #853540;
   font-weight: bold;
   margin: 1rem 0;
 }
@@ -121,7 +121,7 @@
 }
 
 .spec-value {
-  color: #2c3e50;
+  color: #853540;
 }
 
 /* Room Description */
@@ -132,7 +132,7 @@
 .room-description h3 {
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: #853540;
 }
 
 .room-description p {
@@ -148,7 +148,7 @@
 .room-amenities h3 {
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: #853540;
 }
 
 .room-amenities ul {

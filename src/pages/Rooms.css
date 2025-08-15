@@ -42,7 +42,7 @@
 
 .filters h3 {
   margin-bottom: 1.5rem;
-  color: #2c3e50;
+  color: #853540;
   font-size: 1.3rem;
 }
 
@@ -81,7 +81,7 @@
 
 .rooms-header h2 {
   font-size: 2rem;
-  color: #2c3e50;
+  color: #853540;
 }
 
 /* Rooms Grid */
@@ -127,11 +127,11 @@
 .room-details h3 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: #853540;
 }
 
 .room-type {
-  color: #7f8c8d;
+  color: #853540;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
