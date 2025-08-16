@@ -1,0 +1,234 @@
+/* Review Page Styles - Consistent with project design system */
+.review-form-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.review-hero {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+              url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+  background-size: cover;
+  background-position: center;
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.review-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.review-hero p {
+  font-size: 1.2rem;
+}
+
+/* Container and Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Review Form Container */
+.review-form-container {
+  max-width: 1200px; /* Increased width for better desktop appearance */
+  margin: 2rem auto;
+  background: white;
+  padding :2.5rem;
+  padding-left: 10rem; /* Increased padding for better spacing */
+  padding-right: 10rem; /* Increased padding for better spacing */
+  border-radius: 10px;
+  border: 3px solid goldenrod;
+}
+
+.review-form-container h2 {
+  margin-bottom: 1.5rem;
+  color: #853540;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+/* Booking Info Display */
+.booking-info {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border-left: 4px solid #853540;
+}
+
+.booking-info p {
+  margin: 0.5rem 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.booking-info strong {
+  color: #853540;
+}
+
+/* Form Styling */
+.review-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+  font-size: 1rem;
+}
+
+/* Star Rating Styling */
+.star-rating {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.star-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.star-button:hover {
+  transform: scale(1.1);
+}
+
+.star {
+  color: #ddd;
+  transition: color 0.2s ease;
+}
+
+.star.active {
+  color: gold;
+}
+
+.star.hover {
+  color: #ffd700;
+}
+
+/* Textarea Styling */
+textarea {
+  width: 500px;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #853540;
+  box-shadow: 0 0 0 2px rgba(133, 53, 64, 0.2);
+}
+
+/* Button Styling */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-submit {
+  background-color: #853540;
+  color: white;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.btn-submit:hover {
+  background-color: #612730;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(133, 53, 64, 0.3);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .review-hero {
+    height: 30vh;
+  }
+  
+  .review-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .review-hero p {
+    font-size: 1rem;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+  
+  .review-form-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .star-button {
+    font-size: 1.5rem;
+  }
+    textarea {
+  width: 300px;
+}
+}
+
+@media (max-width: 480px) {
+  .review-form-container {
+    padding: 1rem;
+  }
+  
+  .booking-info {
+    padding: 1rem;
+  }
+  
+  .star-rating {
+    justify-content: center;
+  }
+  textarea {
+  width: 300px;
+}
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
+
+.mt-2 {
+  margin-top: 1rem;
+}

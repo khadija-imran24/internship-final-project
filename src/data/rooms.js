@@ -17,7 +17,7 @@ export const rooms = [
     available: true
   },
   {
-    id: 1,
+    id: 2,
     name: "Deluxe Suite",
     type: "Suite",
     price: 299,
@@ -33,7 +33,7 @@ export const rooms = [
     available: true
   },
   {
-    id: 1,
+    id: 3,
     name: "Deluxe Suite",
     type: "Suite",
     price: 299,

@@ -1,4 +1,3 @@
-// Mock data for bookings
 export const bookings = [
   {
     booking_id: 1,
@@ -14,14 +13,14 @@ export const bookings = [
   },
   {
     booking_id: 2,
-    user_id: 2,
+    user_id: 1,
     room_id: 3,
-    arrival_date: "2024-06-10",
+    arrival_date: "2023-04-10",
     arrival_time: "14:00",
-    departure_date: "2024-06-15",
+    departure_date: "2023-04-15",
     departure_time: "12:00",
     children: 1,
     adults: 1,
-    status: "pending"
+    status: "completed"
   }
 ];

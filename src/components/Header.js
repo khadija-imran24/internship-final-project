@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
+  const [isToggled, setIsToggled] = useState(false); // State for toggle button
+
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -11,7 +17,10 @@ const Header = () => {
             <img src="/logo.jpg" alt="Mehman Palace Logo"/>
             <h1>Mehman Palace</h1>
           </Link>
-          <nav className="nav">
+          <button className="hamburger" onClick={handleToggle}>
+            ☰
+          </button>
+          <nav className={`nav ${isToggled ? 'active' : ''}`}>
             <Link to="/" className="nav-link">Home</Link>
             <Link to="/rooms" className="nav-link">Rooms</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
