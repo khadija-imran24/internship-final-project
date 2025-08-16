@@ -48,7 +48,7 @@ const RoomDetails = () => {
             </div>
 
             {/* Room Information */}
-            <div className="room-info">
+            <div className="room-info1">
               <h2>{room.name}</h2>
               <p className="room-type">{room.type}</p>
               <p className="price">PKR. {room.price}/night</p>

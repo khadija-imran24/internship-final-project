@@ -35,13 +35,13 @@
 }
 
 .footer-section a:hover {
-  color: #6b2d35;
+  color: #381318;
 }
 
 .footer-bottom {
   text-align: center;
   padding-top: 1rem;
-  border-top: 1px solid #34495e;
+  border-top: 1px solid goldenrod;
 }
 
 @media (max-width: 768px) {
