@@ -102,6 +102,11 @@ const Home = () => {
               <h3>Parking</h3>
               <p>Complimentary valet parking for all guests</p>
             </div>
+             <div className="amenity">
+              <i className="fas fa-buffet"></i>
+              <h3>Buffet</h3>
+              <p>Enjoy our special buffet with special cuisines.</p>
+            </div>
           </div>
         </div>
       </section>
