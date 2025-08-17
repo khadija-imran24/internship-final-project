@@ -65,7 +65,7 @@ const Register = () => {
                 <label>Contact No.</label>
                 <input
                   type="tel"
-                  name="number"
+                  name="contact"
                   value={formData.contact}
                   onChange={handleChange}
                   required
