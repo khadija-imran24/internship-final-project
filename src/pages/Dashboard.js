@@ -51,7 +51,10 @@ const Dashboard = () => {
                   return (
                     <div key={booking.booking_id} className="booking-card">
                       <div className="booking-info">
-                        <h3>{room?.name} (Room No: {room?.roomno})</h3>
+                        <div className="room-image">
+                          <img src={room.images[0]} alt={room.name} />
+                        </div>
+                        <h3><Link to={`/room/${room.id}` } className='Linked'>{room?.name}</Link><br></br> (Room No: {room?.roomno})</h3>
                         <p><strong>Type:</strong> {room?.type}</p>
                         <p><strong>Check-in:</strong> {formatDate(booking.arrival_date)}</p>
                         <p><strong>Check-out:</strong> {formatDate(booking.departure_date)}</p>
