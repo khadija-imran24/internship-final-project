@@ -1,4 +1,5 @@
-const db = require('../models/db');
+const db = require("../db");
+
 
 // Get all room history
 exports.getAllRoomHistory = async (req, res) => {

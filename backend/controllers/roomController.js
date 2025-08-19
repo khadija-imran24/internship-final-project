@@ -1,81 +1,43 @@
-const db = require('../models/db');
+const db = require("../db");
 
-// Get all rooms
-exports.getAllRooms = async (req, res) => {
-  try {
-    const [rows] = await db.query('SELECT * FROM rooms');
-    res.json(rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Database query error' });
-  }
+
+// ✅ Get all rooms
+exports.getRooms = (req, res) => {
+  const query = `
+    SELECT 
+      room_id AS id,
+      room_no AS name,
+      room_type AS type,
+      price_per_day AS price,
+      description,
+      image_url AS image,
+      status
+    FROM rooms
+  `;
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
 };
 
-// Get room by ID
-exports.getRoomById = async (req, res) => {
-  try {
-    const [rows] = await db.query('SELECT * FROM rooms WHERE id = ?', [req.params.id]);
-    if (rows.length === 0) return res.status(404).json({ error: 'Room not found' });
-    res.json(rows[0]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Database query error' });
-  }
+// ✅ Get room by ID
+exports.getRoomById = (req, res) => {
+  const roomId = req.params.id;
+  const query = `
+    SELECT 
+      room_id AS id,
+      room_no AS name,
+      room_type AS type,
+      price_per_day AS price,
+      description,
+      image_url AS image,
+      status
+    FROM rooms
+    WHERE room_id = ?
+  `;
+  db.query(query, [roomId], (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (results.length === 0) return res.status(404).json({ message: "Room not found" });
+    res.json(results[0]);
+  });
 };
-
-// Create new room
-exports.createRoom = async (req, res) => {
-  try {
-    const { name, capacity } = req.body;
-    const [result] = await db.query(
-      'INSERT INTO rooms (name, capacity) VALUES (?, ?)',
-      [name, capacity]
-    );
-    res.status(201).json({ id: result.insertId, name, capacity });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Database insert error' });
-  }
-};
-
-// Update room
-exports.updateRoom = async (req, res) => {
-  try {
-    const { name, capacity } = req.body;
-    const [result] = await db.query(
-      'UPDATE rooms SET name = ?, capacity = ? WHERE id = ?',
-      [name, capacity, req.params.id]
-    );
-    if (result.affectedRows === 0) return res.status(404).json({ error: 'Room not found' });
-    res.json({ id: req.params.id, name, capacity });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Database update error' });
-  }
-};
-
-// Delete room
-exports.deleteRoom = async (req, res) => {
-  try {
-    const [result] = await db.query('DELETE FROM rooms WHERE id = ?', [req.params.id]);
-    if (result.affectedRows === 0) return res.status(404).json({ error: 'Room not found' });
-    res.json({ message: 'Room deleted successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Database delete error' });
-  }
-};
-
-
-
-// const db = require('../models/db');
-
-// exports.getAllrooms = async (req, res) => {
-//   try {
-//     const [rows] = await db.query('SELECT * FROM rooms');
-//     res.json(rows);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Database query error' });
-//   }
-// };

@@ -1,48 +1,62 @@
-const db = require('../models/db');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const db = require("../db");
+const bcrypt = require("bcryptjs");
 
-// POST /api/auth/login
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ message: 'Email and password required' });
+// ✅ Login User
+const loginUser = (req, res) => {
+  const { email, password } = req.body;
 
-    const [rows] = await db.execute(
-      'SELECT id, name, email, password, role FROM users WHERE email = ?',
-      [email]
-    );
-    const user = rows[0];
-    if (!user) return res.status(401).json({ message: 'Invalid credentials' });
-
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ message: 'Invalid credentials' });
-
-    const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
-
-    res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
+  if (!email || !password) {
+    return res.status(400).json({ message: "Please provide email and password" });
   }
+
+  const query = "SELECT * FROM usertable WHERE email = ?";
+  db.query(query, [email], async (err, results) => {
+    if (err) return res.status(500).json({ message: "DB error", error: err });
+    if (results.length === 0) return res.status(401).json({ message: "Invalid email or password" });
+
+    const user = results[0];
+
+    // Compare password (assuming you stored plain password OR hashed)
+    const isMatch = await bcrypt.compare(password, user.password).catch(() => false);
+
+    if (!isMatch && password !== user.password) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    res.json({
+      message: "Login successful",
+      user: {
+        id: user.user_id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  });
 };
 
-// GET /api/auth/profile
-exports.profile = async (req, res) => {
-  try {
-    const id = req.user.id;
-    const [rows] = await db.execute(
-      'SELECT id, name, email, role FROM users WHERE id = ?',
-      [id]
-    );
-    if (!rows[0]) return res.status(404).json({ message: 'User not found' });
-    res.json({ user: rows[0] });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
+// ✅ Register User
+const registerUser = (req, res) => {
+  const { name, email, password, contact, role } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: "Please fill all required fields" });
   }
+
+  // Hash password before saving
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  const query = "INSERT INTO usertable (name, email, password, contact, role) VALUES (?, ?, ?, ?, ?)";
+  db.query(query, [name, email, hashedPassword, contact || "", role || "guest"], (err, result) => {
+    if (err) {
+      if (err.code === "ER_DUP_ENTRY") {
+        return res.status(400).json({ message: "Email already registered" });
+      }
+      return res.status(500).json({ message: "DB error", error: err });
+    }
+
+    res.json({ message: "User registered successfully", userId: result.insertId });
+  });
 };
+
+module.exports = { loginUser, registerUser };

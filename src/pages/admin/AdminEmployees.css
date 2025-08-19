@@ -1,0 +1,159 @@
+.employees-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.employees-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.employees-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.employees-header button {
+    padding: 6px 12px;
+    background: goldenrod;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.employees-header button:hover {
+    background: rgb(185, 140, 24);
+}
+
+.employees-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    overflow-x: auto;
+    display: block;
+}
+
+.employees-table th,
+.employees-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    word-break: break-word;
+}
+
+.employee-form-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.employee-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    max-width: 95vw;
+    box-sizing: border-box;
+}
+
+.employee-form input,
+.employee-form select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.employee-form button {
+    padding: 8px 12px;
+    background: goldenrod;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.employees-table button {
+    padding: 6px 12px;
+    background: #853540;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .employees-container {
+        padding: 10px;
+        border-radius: 6px;
+    }
+
+    .employees-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .employees-header h2 {
+        font-size: 1rem;
+    }
+
+    .employees-table th,
+    .employees-table td {
+        padding: 6px;
+        font-size: 0.95rem;
+    }
+
+    .employee-form {
+        padding: 12px;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 98vw;
+    }
+
+    .employee-form input,
+    .employee-form select {
+        padding: 6px;
+        margin: 6px 0;
+        font-size: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .employees-header button,
+    .employee-form button,
+    .employees-table button {
+        width: 100%;
+        font-size: 1rem;
+        padding: 8px;
+    }
+}

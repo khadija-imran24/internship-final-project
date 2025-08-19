@@ -1,0 +1,84 @@
+.admin-dashboard {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.total-rooms {
+  background: #607d8b;
+}
+
+.available-rooms {
+  background: #4caf50;
+}
+
+.occupied-rooms {
+  background: goldenrod;
+}
+
+.total-bookings {
+  background: #2196f3;
+}
+
+.charts-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.chart-box {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .charts-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-dashboard {
+    padding: 10px;
+  }
+  .cards-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .card {
+    font-size: 16px;
+    padding: 15px;
+  }
+  .charts-container {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  .chart-box {
+    padding: 12px;
+  }
+}

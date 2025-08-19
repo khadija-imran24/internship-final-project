@@ -1,4 +1,5 @@
-const db = require('../models/db');
+const db = require("../db");
+
 const bcrypt = require('bcryptjs');
 
 // Get all users (admin only)

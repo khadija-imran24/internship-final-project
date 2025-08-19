@@ -1,4 +1,5 @@
-const db = require('../models/db');
+const db = require("../db");
+
 
 // Get all bookings
 exports.getAllBooks = async (req, res) => {

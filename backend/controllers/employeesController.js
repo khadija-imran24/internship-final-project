@@ -1,4 +1,5 @@
-const db = require('../models/db');
+const db = require("../db");
+
 
 // Get all employees
 exports.getAllEmployees = async (req, res) => {

@@ -1,82 +1,47 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { rooms } from '../data/rooms';
-import './Booking.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const Booking = () => {
-  const { id } = useParams();
-  const room = rooms.find(r => r.id === parseInt(id));
+function Booking() {
+  const [rooms, setRooms] = useState([]);
+  const [form, setForm] = useState({ room_id: "", name: "", email: "" });
 
-  if (!room) {
-    return <div>Room not found</div>;
-  }
+  useEffect(() => {
+    axios.get("http://localhost:5000/rooms")
+      .then(res => setRooms(res.data))
+      .catch(err => console.error("Error fetching rooms:", err));
+  }, []);
+
+  const handleChange = e => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    axios.post("http://localhost:5000/bookings", form)
+      .then(() => alert("Booking request sent!"))
+      .catch(err => console.error(err));
+  };
 
   return (
-    <div className="booking-page">
-      <section className="booking-hero">
-        <div className="container">
-          <h1>Book {room.name}</h1>
-          <p>Complete your reservation</p>
-        </div>
-      </section>
-       <div className="booking-summary">
-              <h3>Booking Summary</h3>
-              <div className="summary-card">
-                <img src={room.images[0]} alt={room.name} />
-                <h4>{room.name}</h4>
-                <p>{room.type}</p>
-                <p>${room.price}/night</p>
-                <p>Max {room.maxGuests} guests</p>
-              </div>
-            </div>
-      <section className="section">
-        <div className="container">
-          <div className="booking-layout">
-            <div className="booking-form">
-              <h2>Guest Information</h2>
-              <form>
-                <div className="form-group">
-                  <label>Full Name</label>
-                  <input type="text" required />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input type="email" required />
-                </div>
-                <div className="form-group">
-                  <label>Phone</label>
-                  <input type="tel" required />
-                </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Arrival Date</label>
-                    <input type="date" required />
-                  </div>
-                  <div className="form-group">
-                    <label>Departure Date</label>
-                    <input type="date" required />
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Adults</label>
-                    <input type="number" min="1" max={room.maxGuests} defaultValue="1" />
-                  </div>
-                  <div className="form-group">
-                    <label>Children</label>
-                    <input type="number" min="0" defaultValue="0" />
-                  </div>
-                </div>
-                <button type="submit" className="btn">Proceed to Payment</button>
-              </form>
-            </div>
-            
-           
-          </div>
-        </div>
-      </section>
+    <div>
+      <h2>Book a Room</h2>
+      <form onSubmit={handleSubmit}>
+        <input name="name" placeholder="Your Name" onChange={handleChange} />
+        <input name="email" placeholder="Your Email" onChange={handleChange} />
+
+        <select name="room_id" onChange={handleChange}>
+          <option value="">Select Room</option>
+          {rooms.map(r => (
+            <option key={r.id} value={r.id}>
+              {r.name} - Rs.{r.price}
+            </option>
+          ))}
+        </select>
+
+        <button type="submit">Book</button>
+      </form>
     </div>
   );
-};
+}
 
 export default Booking;

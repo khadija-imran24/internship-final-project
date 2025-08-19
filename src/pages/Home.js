@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { rooms } from '../data/rooms';
 import './Home.css';
+import axios from 'axios';
 
 const Home = () => {
+  const [rooms, setRooms] = useState([]);
+
+  // Fetch rooms from backend API
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/rooms');
+        setRooms(res.data);
+      } catch (err) {
+        console.error("Error fetching rooms:", err);
+      }
+    };
+    fetchRooms();
+  }, []);
+
   return (
     <div className="home">
       {/* Hero Section */}
@@ -37,7 +52,7 @@ const Home = () => {
             </div>
             <div className="about-image">
               <img 
-                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1170&q=80" 
                 alt="Luxury Hotel" 
               />
             </div>
@@ -54,14 +69,14 @@ const Home = () => {
           </div>
           <div className="rooms-grid">
             {rooms.slice(0, 3).map(room => (
-              <div key={room.id} className="room-card">
-                <img src={room.images[0]} alt={room.name} />
+              <div key={room.room_id} className="room-card">
+                <img src={room.image_url || "https://via.placeholder.com/300"} alt={room.room_type} />
                 <div className="room-info">
-                  <h3>{room.name}</h3>
-                  <p className="room-type">{room.type}</p>
-                  <p className="price" color='#853540'>PKR.{room.price}/night</p>
+                  <h3>{room.room_type}</h3>
+                  <p className="room-type">{room.status}</p>
+                  <p className="price">PKR. {room.price_per_day}/night</p>
                   <p className="room-description">{room.description}</p>
-                  <Link to={`/room/${room.id}`} className="btn">View Details</Link>
+                  <Link to={`/room/${room.room_id}`} className="btn">View Details</Link>
                 </div>
               </div>
             ))}
@@ -70,7 +85,7 @@ const Home = () => {
       </section>
 
       {/* Amenities Section */}
-      <section className="section-amenities">
+      <section className="section amenities">
         <div className="container">
           <div className="section-title">
             <h2>Hotel Amenities</h2>
@@ -102,7 +117,7 @@ const Home = () => {
               <h3>Parking</h3>
               <p>Complimentary valet parking for all guests</p>
             </div>
-             <div className="amenity">
+            <div className="amenity">
               <i className="fas fa-buffet"></i>
               <h3>Buffet</h3>
               <p>Enjoy our special buffet with special cuisines.</p>

@@ -1,131 +1,60 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { rooms, roomTypes } from '../data/rooms';
-import { bookings } from '../data/bookings';
-import './Rooms.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "./Rooms.css"; // keep your old css
 
 const Rooms = () => {
-  const [selectedType, setSelectedType] = useState('All');
-  const [priceRange, setPriceRange] = useState([0, 500]);
+  const [rooms, setRooms] = useState([]);
 
-  const [arrivalDate, setArrivalDate] = useState('');
+  useEffect(() => {
+  axios.get("http://localhost:5000/api/rooms")
+    .then((res) => {
+      console.log("API Response:", res.data);   // 👈 check this in browser console
+      const formattedRooms = res.data.map((r) => ({
+        id: r.room_id,
+        name: r.room_no,
+        type: r.room_type,
+        price: r.price_per_day,
+        description: r.description,
+        image: r.image_url
+      }));
+      setRooms(formattedRooms);
+    })
+    .catch((err) => console.error("Error fetching rooms:", err));
+}, []);
 
-  // Function to check if a room is available for selected arrival date
-  const isRoomAvailable = (roomId, arrival) => {
-    if (!arrival) return true; // If no arrival date selected, show all rooms
-    
-    const arrivalDate = new Date(arrival);
-    
-    // Check if room has any bookings on or after the arrival date
-    const hasFutureBooking = bookings.some(booking => {
-      if (booking.room_id !== roomId) return false;
-      
-      const bookingArrival = new Date(booking.arrival_date);
-      
-      // Check if booking arrival is on or after the selected arrival date
-      return bookingArrival >= arrivalDate;
-    });
-    
-    return !hasFutureBooking;
-  };
-
-  const filteredRooms = rooms.filter(room => {
-    const typeMatch = selectedType === 'All' || room.type === selectedType;
-    const priceMatch = room.price >= priceRange[0] && room.price <= priceRange[1];
-    const arrivalMatch = isRoomAvailable(room.id, arrivalDate);
-    
-    return typeMatch && priceMatch  && arrivalMatch;
-  });
-
-  const handleResetFilters = () => {
-    setSelectedType('All');
-    setPriceRange([0, 500]);
-   
-    setArrivalDate('');
-  };
 
   return (
     <div className="rooms-page">
-      <section className="rooms-hero">
-        <div className="container">
-          <h1>Our Rooms</h1>
-          <p>Find the perfect accommodation for your stay</p>
-        </div>
-      </section>
-
       <section className="section">
         <div className="container">
-          <div className="rooms-layout">
-            {/* Filters Sidebar */}
-            <aside className="filters">
-              <h3>Filter Rooms</h3>
-              
-              <div className="filter-group">
-                <label>Room Type</label>
-                <select 
-                  value={selectedType} 
-                  onChange={(e) => setSelectedType(e.target.value)}
-                >
-                  {roomTypes.map(type => (
-                    <option key={type} value={type}>{type}</option>
-                  ))}
-                </select>
-              </div>
+          <div className="section-title">
+            <h2>Our Rooms</h2>
+            <p>Choose from a variety of styles to suit your needs</p>
+          </div>
 
-              <div className="filter-group">
-                <label>Price Range: ${priceRange[0]} - ${priceRange[1]}</label>
-                <input
-                  type="range"
-                  min="0"
-                  max="500"
-                  value={priceRange[1]}
-                  onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+          <div className="rooms-grid">
+            {rooms.map((room) => (
+              <div key={room.id} className="room-card">
+                <img
+                  src={room.image || "https://via.placeholder.com/400x250"}
+                  alt={room.name}
                 />
+                <div className="room-info">
+                  <h3>{room.name}</h3>
+                  <p className="room-type">{room.type}</p>
+                  <p className="price">PKR {room.price}/night</p>
+                  <p className="room-description">{room.description}</p>
+                  <Link to={`/room/${room.id}`} className="btn">
+                    View Details
+                  </Link>
+                </div>
               </div>
+            ))}
 
-
-              <div className="filter-group">
-                <label>Arrival Date</label>
-                <input
-                  type="date"
-                  value={arrivalDate}
-                  onChange={(e) => setArrivalDate(e.target.value)}
-                  min={new Date().toISOString().split('T')[0]}
-                />
-              </div>
-
-              <button 
-                className="btn" 
-                onClick={handleResetFilters}
-              >
-                Reset Filters
-              </button>
-            </aside>
-
-            {/* Rooms Grid */}
-            <div className="rooms-content">
-              <div className="rooms-header">
-                <h2>Available Rooms ({filteredRooms.length})</h2>
-              </div>
-              
-              <div className="rooms-grid">
-                {filteredRooms.map(room => (
-                  <div key={room.id} className="room-card">
-                    <div className="room-image">
-                      <img src={room.images[0]} alt={room.name} />
-                    </div>
-                    <div className="room-details">
-                      <h3>{room.name}</h3>
-                      <p className="room-type">{room.type}</p>
-                      <p className="room-price">${room.price}/night</p>
-                      <p className="room-description">{room.description}</p>
-                      
-                      <Link to={`/room/${room.id}`} className="btn">View Details</Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            {rooms.length === 0 && (
+              <p className="no-rooms">No rooms available at the moment.</p>
+            )}
           </div>
         </div>
       </section>

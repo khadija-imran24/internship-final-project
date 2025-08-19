@@ -1,16 +1,9 @@
-const router = require('express').Router();
-const authCtrl = require('../controllers/authController');
-const { verifyToken } = require('../middleware/auth');
+const express = require("express");
+const router = express.Router();
+const { loginUser, registerUser } = require("../controllers/authController");
 
-// POST login
-router.post('/login', authCtrl.login);
-
-// GET profile (protected)
-router.get('/profile', verifyToken, authCtrl.profile);
-
-// Test route
-router.get('/test', (req, res) => {
-  res.json({ message: 'Auth routes are working. Use POST /login to log in.' });
-});
+// ✅ POST routes
+router.post("/login", loginUser);
+router.post("/register", registerUser);
 
 module.exports = router;
