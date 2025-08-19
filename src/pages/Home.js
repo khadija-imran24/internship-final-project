@@ -11,7 +11,17 @@ const Home = () => {
     const fetchRooms = async () => {
       try {
         const res = await axios.get('http://localhost:5000/api/rooms');
-        setRooms(res.data);
+        // format same as Rooms.js
+        const formattedRooms = res.data.map((r) => ({
+          id: r.room_id,
+          name: r.room_no,
+          type: r.room_type,
+          price: r.price_per_day,
+          description: r.description,
+          image: r.image_url,
+          status: r.status
+        }));
+        setRooms(formattedRooms);
       } catch (err) {
         console.error("Error fetching rooms:", err);
       }
@@ -68,15 +78,15 @@ const Home = () => {
             <p>Discover our most popular accommodations</p>
           </div>
           <div className="rooms-grid">
-            {rooms.slice(0, 3).map(room => (
-              <div key={room.room_id} className="room-card">
-                <img src={room.image_url || "https://via.placeholder.com/300"} alt={room.room_type} />
+            {rooms.slice(0, 3).map((room) => (
+              <div key={room.id} className="room-card">
+                <img src={room.image || "https://via.placeholder.com/300"} alt={room.name} />
                 <div className="room-info">
-                  <h3>{room.room_type}</h3>
-                  <p className="room-type">{room.status}</p>
-                  <p className="price">PKR. {room.price_per_day}/night</p>
+                  <h3>{room.name}</h3>
+                  <p className="room-type">{room.type} - {room.status}</p>
+                  <p className="price">PKR. {room.price}/night</p>
                   <p className="room-description">{room.description}</p>
-                  <Link to={`/room/${room.room_id}`} className="btn">View Details</Link>
+                  <Link to={`/room/${room.id}`} className="btn">View Details</Link>
                 </div>
               </div>
             ))}

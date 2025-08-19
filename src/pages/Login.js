@@ -1,48 +1,45 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './Login.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // ✅ import useNavigate
+import "./Login.css";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // ✅ initialize navigate hook
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
-      const res = await axios.post("/api/auth/login", formData);
-
+      const res = await axios.post("http://localhost:5000/api/auth/login", formData);
 
       if (res.data.success) {
-        // Save user details (token, role, etc.)
+        // ✅ Save user info (role, token, etc.)
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        localStorage.setItem("token", res.data.token);
 
-        // Redirect: admin goes to admin dashboard, others go to normal dashboard
         if (res.data.user.role === "admin") {
-          navigate("/admin/dashboard");
+          navigate("/admin/dashboard"); // ✅ redirect admin
         } else {
-          navigate("/dashboard");
+          navigate("/dashboard"); // ✅ redirect normal user
         }
       } else {
-        setError(res.data.message || "Invalid email or password");
+        setError("Invalid credentials");
       }
     } catch (err) {
       console.error(err);
-      setError("Login failed. Please check your credentials.");
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -59,7 +56,7 @@ const Login = () => {
         <div className="container">
           <div className="login-form">
             <h2>Welcome Back</h2>
-            {error && <p className="error">{error}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Email</label>
